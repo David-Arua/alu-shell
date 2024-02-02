@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Bash script used to solve the popular fizz buzz quesiton 
 conter=1
 while [ $conter -le 100 ];
 do
