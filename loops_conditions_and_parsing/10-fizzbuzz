@@ -1,19 +1,14 @@
 #!/usr/bin/env bash
 # Bash script used to solve the popular fizz buzz quesiton 
-conter=1
-while [ $conter -le 100 ];
-do
-if [ $((conter%3)) == 0 -a $((conter%5)) == 0 ]
-then
-    echo "FizzBuzz"
-elif [ $((conter%3)) == 0 ]
-then
-    echo "Fizz"
-elif [ $((conter%5)) == 0 ]
-then
-    echo "Buzz"
-else
-    echo $conter
-fi
-    let conter=conter+1
+i=0
+while [ $((i++)) -lt 100 ]; do
+	if [ $((i % 15)) -eq 0 ]; then
+		echo "FizzBuzz"
+	elif [ $((i % 5)) -eq 0 ]; then
+		echo "Buzz"
+	elif [ $((i % 3)) -eq 0 ]; then
+		echo "Fizz"
+	else
+		echo $i
+	fi
 done
