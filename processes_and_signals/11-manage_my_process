@@ -1,32 +1,22 @@
 #!/usr/bin/env bash
-# This script manages the my_process by starting, stopping, or restarting it.
+# Manages a daemon process
 
-file=/var/run/my_process.pid
+PIDFILE=/var/run/my_process.pid
 
-if [ "$1" == "start" ]; then
-    ./manage_my_process &
-    echo $! > "$file"
-    echo "manage_my_process started"
-elif [ "$1" == "stop" ]; then
-    if [ -f "$file" ]; then
-        pid=$(cat "$file")
-        pkill -P "$pid" 
-        pkill -F "$file" 
-        rm -f "$file"
-        echo "manage_my_process stopped"
-    else
-        echo "Error: PID file not found. manage_my_process may not be running."
-    fi
-elif [ "$1" == "restart" ]; then
-    if [ -f "$file" ]; then
-        pid=$(cat "$file")
-        pkill -P "$pid"  
-        pkill -F "$file"  
-        rm -f "$file"
-    fi
-    ./manage_my_process &
-    echo $! > "$file"
-    echo "manage_my_process restarted"
+if [ "$1" = "start" ]; then
+	./manage_my_process &
+	echo "$!" > "$PIDFILE"
+	echo manage_my_process started
+elif [ "$1" = "stop" ]; then
+	pkill -SIGKILL -f ./manage_my_process
+	rm "$PIDFILE"
+	echo manage_my_process stopped
+elif [ "$1" = "restart" ]; then
+	pkill -SIGKILL -f ./manage_my_process
+	rm "$PIDFILE"
+	./manage_my_process &
+	echo "$!" > "$PIDFILE"
+	echo manage_my_process restarted
 else
-    echo "Usage: manage_my_process {start|stop|restart}"
+	echo "Usage: manage_my_process {start|stop|restart}"
 fi
