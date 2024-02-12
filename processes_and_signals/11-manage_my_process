@@ -10,8 +10,8 @@ if [ "$1" == "start" ]; then
 elif [ "$1" == "stop" ]; then
     if [ -f "$file" ]; then
         pid=$(cat "$file")
-        pkill -P "$pid"  
-        pkill -F "$file"  
+        pkill -P "$pid" 
+        pkill -F "$file" 
         rm -f "$file"
         echo "manage_my_process stopped"
     else
@@ -22,6 +22,7 @@ elif [ "$1" == "restart" ]; then
         pid=$(cat "$file")
         pkill -P "$pid"  
         pkill -F "$file"  
+        rm -f "$file"
     fi
     ./manage_my_process &
     echo $! > "$file"
